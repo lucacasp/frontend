@@ -15,7 +15,7 @@ const NewCollections = () => {
                             key={i}
                             id={item.id}
                             name={item.name}
-                            img={item.image}
+                            img={item.img}
                             new_price={item.new_price}
                             old_price={item.old_price}
                         />
