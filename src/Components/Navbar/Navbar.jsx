@@ -1,7 +1,8 @@
 import React, { useContext } from 'react'
-import { ShopContext } from '../../Context/ShopContext'
 import './Navbar.css'
-
+import nav_dropdown from '../Assets/dropdown_icon.png';
+import { ShopContext } from '../../Context/ShopContext'
+import { useRef } from 'react'
 import { useState } from 'react'
 
 import logo from '../Assets/logo.png'
@@ -11,14 +12,20 @@ const Navbar = () => {
 
     const [menu, setMenu] = useState("Shop");
     const {getTotalCartItems} = useContext(ShopContext);
+    const menuRef = useRef();
 
+    const dropdown_toggle = (e) => {
+        menuRef.current.classList.toggle('nav-menu-visible');
+        e.target.classList.toggle('open');
+    }
     return (
         <div className='navbar'>
             <div className="nav-logo">
                 <img src={logo} alt="" />
                 <p>Glassify</p>
             </div>
-            <ul className='nav-menu'>
+            <img className='nav-dropdown' src={nav_dropdown} alt="" onClick={dropdown_toggle}/>
+            <ul ref={menuRef}className='nav-menu'>
                 <li onClick={() => {setMenu("Shop")}}><Link style={{textDecoration:'none'}} to="/">Shop</Link>{menu === "Shop" ? <hr/> : <></>}</li>
                 <li onClick={() => {setMenu("About")}}><Link style={{textDecoration:'none'}} to="/sunglasses">Occhiali Da Sole</Link>{menu === "sunglasses" ? <hr/> : <></>}</li>
                 <li onClick={() => {setMenu("Contact")}}><Link style={{textDecoration:'none'}} to="/eyewear">Occhiali Da Vista</Link>{menu === "eyewear" ? <hr/> : <></>}</li>
