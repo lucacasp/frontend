@@ -1,14 +1,14 @@
 import React, { useContext } from 'react';
 import './CartItems.css';
 import { ShopContext } from '../../Context/ShopContext';
-import remove_icon from '../Assets/remove_icon.png';
+import cart_cross_icon from '../../Components/Assets/cart_cross_icon.png';
 
-export default function CartItems() {
-  const { all_product, cartItems, removeFromCart } = useContext(ShopContext);
+const CartItems = () => {
+  const { getTotalCartAmount, all_product, cartItems, removeFromCart } = useContext(ShopContext);
 
   return (
     <div className='cartitems'>
-      <div className="cartitems-format-main">
+      <div className='cartitems-format-main'>
         <p>Products</p>
         <p>Title</p>
         <p>Price</p>
@@ -20,19 +20,54 @@ export default function CartItems() {
       {all_product.map((e) => {
         if (cartItems[e.id] > 0) {
           return (
-            <div className="cartitems-format" key={e.id}>
-              <img src={e.img} className='carticon-product-icon' alt="" />
+            <div key={e.id} className="cartitems-format cartitems-format-main">
+              <img src={e.img} alt="" className="carticon-product-icon" />
               <p>{e.name}</p>
-              <p>{e.new_price}</p>
-              <button className='carticon-quantity'>{cartItems[e.id]}</button>
-              <p>{e.new_price * cartItems[e.id]}</p>
-              <img src={remove_icon} onClick={() => removeFromCart(e.id)} className='carticon-remove-icon' alt="" />
+              <p>€ {e.new_price}</p>
+              <button className='cartitems-quantity'>{cartItems[e.id]}</button>
+              <p>€ {e.new_price * cartItems[e.id]}</p>
+              <img 
+                className='cartitems-remove-icon'
+                src={cart_cross_icon}
+                onClick={() => { removeFromCart(e.id); }}
+                alt=""              />
             </div>
           );
         } else {
-          return null; // Restituisce null se l'elemento non è nel carrello
+          return null;
         }
       })}
+      <div className="cartitems-down">
+        <div className="cartitems-total">
+          <h1>Cart Total</h1>
+          <div>
+            <div className="cartitems-total-item">
+              <p>Subtotal</p>
+              <p>€ {getTotalCartAmount()}</p>
+            </div>
+            <hr />
+            <div className="cartitems-total-item">
+              <p>Costi di spedizione</p>
+              <p>Gratis</p>
+            </div>
+            <hr />
+            <div className="cartitems-total-item">
+              <h3>Totale</h3>
+              <h3>€ {getTotalCartAmount()}</h3>
+            </div>
+          </div>
+          <button>Vai al pagamento</button>
+        </div>
+        <div className="cartitems-promo">
+          <p>Se hai un codice promo, inseriscilo qui</p>
+          <div className="cartitems-promobox">
+            <input type="text" placeholder='Inserisci il codice promo' />
+            <button>Applica</button>
+          </div>
+        </div>
+      </div>
     </div>
   );
-}
+};
+
+export default CartItems;

@@ -52,3 +52,12 @@
     align-items: center;
     gap: 10px;
 }
+.productdisplay-right button{
+    width: 282px;    
+    height: 60px;
+    font-size: 20px;
+    color: #FFF;
+    background: #ff0000;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;}
